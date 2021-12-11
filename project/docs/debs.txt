@@ -1,0 +1,4 @@
+python>=3.8
+redis-server
+redis-tools
+python3-dev
