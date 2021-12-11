@@ -28,22 +28,15 @@ DATABASES = {
     }
 }
 
-TIME_ZONE = 'Europe/Moscow'
+TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'ru'
 LANGUAGES = (
     ('ru', gettext_noop('Russian')),
     # ('en', gettext_noop('English'))
 )
-LANGUAGE_CODES = MODELTRANSLATION_LANGUAGES = tuple([x[0] for x in LANGUAGES])
+LANGUAGE_CODES = tuple([x[0] for x in LANGUAGES])
 LANGUAGE_CODES_PUBLIC = ('ru',)  # 'en'
-DEFAULT_LANGUAGE = MODELTRANSLATION_DEFAULT_LANGUAGE = LANGUAGES[0][0]
-MODELTRANSLATION_ENABLE_FALLBACKS = True
-MODELTRANSLATION_FALLBACK_LANGUAGES = {
-    'default': ('ru',),
-    # 'en': ('ru',)
-}
-
-MODELTRANSLATION_CUSTOM_FIELDS = ('RichTextUploadingField',)
+DEFAULT_LANGUAGE = LANGUAGES[0][0]
 
 SITE_ID = 1
 SITE_NAME = 'ask.wizzzet.ru'
@@ -127,7 +120,6 @@ ROOT_URLCONF = 'project.urls'
 
 INSTALLED_APPS = (
     'corsheaders',
-    'modeltranslation',
     'django.contrib.auth',
     'django.contrib.sites',
     'django.contrib.contenttypes',
@@ -214,9 +206,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
         'rest_framework.permissions.IsAuthenticated'
     ),
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
-    ),
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.LimitOffsetPagination',
     'UPLOADED_FILES_USE_URL': False,
@@ -261,7 +250,7 @@ except ImportError:
 
 SITE_URL = SITE_PROTOCOL + SITE_NAME
 API_BASE_URL = f'{SITE_URL}/api/'
-CSRF_TRUSTED_ORIGINS = [SITE_NAME]
+CSRF_TRUSTED_ORIGINS = [f'{x}{SITE_NAME}' for x in ('https://', 'http://')]
 
 TEMPLATES[0]['OPTIONS']['debug'] = DEBUG
 TEMPLATES[1]['OPTIONS']['cache_size'] = 1000000 if DEBUG else -1

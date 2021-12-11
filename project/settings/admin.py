@@ -5,7 +5,6 @@ i = 4
 for app in (
     'django.contrib.sessions',
     'django.contrib.messages',
-    'project.admin.SuitConfig',
     'django.contrib.admin'
 ):
     INSTALLED_APPS.insert(i, app)

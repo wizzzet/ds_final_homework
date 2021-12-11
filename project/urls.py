@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.conf.urls import url
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.urls import include, path, re_path
 from django.views.static import serve
@@ -35,17 +34,17 @@ urlpatterns = (
         'swagger/docs/',
         schema_view.as_view()
     ),
-    url(
+    re_path(
         r'^swagger(?P<format>\.json|\.yaml)$',
         schema_view.without_ui(cache_timeout=0),
         name='schema-json'
     ),
-    url(
+    re_path(
         r'^swagger/$',
         schema_view.with_ui('swagger', cache_timeout=0),
         name='schema-swagger-ui'
     ),
-    url(
+    re_path(
         r'^redoc/$',
         schema_view.with_ui('redoc', cache_timeout=0),
         name='schema-redoc'
