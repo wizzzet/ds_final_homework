@@ -8,14 +8,7 @@ from project.views import CacheClearView
 
 admin.autodiscover()
 
-urlpatterns = (
-    re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
-)
-
-# Documents urlpatterns
-urlpatterns += (
-    re_path(r'^documents/', include('documents.urls')),
-)
+urlpatterns = tuple()
 
 if settings.DEBUG is True:
     urlpatterns += (

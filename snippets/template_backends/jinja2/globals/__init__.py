@@ -8,11 +8,6 @@ from snippets.template_backends.jinja2.globals.i18n import \
 from snippets.template_backends.jinja2.globals.i18n import \
     get_languages  # NOQA
 from snippets.template_backends.jinja2.globals.i18n import ugettext  # NOQA
-from snippets.template_backends.jinja2.globals.images import \
-    cropped_thumbnail  # NOQA
-from snippets.template_backends.jinja2.globals.images import thumbnail  # NOQA
-from snippets.template_backends.jinja2.globals.images import \
-    thumbnail_obj  # NOQA
 from snippets.template_backends.jinja2.globals.numbers import \
     floatformat  # NOQA
 from snippets.template_backends.jinja2.globals.numbers import intcomma  # NOQA

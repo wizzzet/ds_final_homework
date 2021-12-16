@@ -13,6 +13,7 @@ flake8
 hiredis
 isort
 jupyter
+lxml
 matplotlip
 nltk
 numpy

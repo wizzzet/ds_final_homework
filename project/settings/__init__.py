@@ -28,6 +28,8 @@ DATABASES = {
     }
 }
 
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
 TIME_ZONE = 'UTC'
 LANGUAGE_CODE = 'ru'
 LANGUAGES = (

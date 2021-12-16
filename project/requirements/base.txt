@@ -8,7 +8,7 @@ absl-py==1.0.0
     # via
     #   tensorboard
     #   tensorflow
-amqp==5.0.6
+amqp==5.0.7
     # via kombu
 argon2-cffi==21.3.0
     # via notebook
@@ -95,7 +95,7 @@ django-import-export==2.7.0
     # via -r project/requirements/base.in
 django-redis-cache==3.0.0
     # via -r project/requirements/base.in
-djangorestframework==3.12.4
+djangorestframework==3.13.1
     # via
     #   -r project/requirements/base.in
     #   drf-yasg
@@ -135,7 +135,7 @@ hiredis==2.0.0
     # via -r project/requirements/base.in
 idna==3.3
     # via requests
-importlib-metadata==4.8.2
+importlib-metadata==4.8.3
     # via markdown
 importlib-resources==5.4.0
     # via jsonschema
@@ -176,7 +176,7 @@ joblib==1.1.0
     # via nltk
 jsonpointer==2.2
     # via flex
-jsonschema==4.2.1
+jsonschema==4.3.0
     # via nbformat
 jupyter==1.0.0
     # via -r project/requirements/base.in
@@ -208,6 +208,8 @@ kombu==5.2.2
     # via celery
 libclang==12.0.0
     # via tensorflow
+lxml==4.7.1
+    # via -r project/requirements/base.in
 markdown==3.3.6
     # via tensorboard
 markuppy==1.14
@@ -268,7 +270,7 @@ packaging==21.3
     # via
     #   bleach
     #   drf-yasg
-pandas==1.3.4
+pandas==1.3.5
     # via -r project/requirements/base.in
 pandocfilters==1.5.0
     # via nbconvert
@@ -327,6 +329,7 @@ pytz==2021.3
     # via
     #   -r project/requirements/base.in
     #   celery
+    #   djangorestframework
     #   pandas
 pyxdg==0.27
     # via bpython
@@ -339,7 +342,7 @@ pyzmq==22.3.0
     #   jupyter-client
     #   notebook
     #   qtconsole
-qtconsole==5.2.1
+qtconsole==5.2.2
     # via jupyter
 qtpy==1.11.3
     # via qtconsole
@@ -400,7 +403,7 @@ tensorflow==2.7.0
     # via -r project/requirements/base.in
 tensorflow-estimator==2.7.0
     # via tensorflow
-tensorflow-io-gcs-filesystem==0.22.0
+tensorflow-io-gcs-filesystem==0.23.1
     # via tensorflow
 termcolor==1.1.0
     # via tensorflow
