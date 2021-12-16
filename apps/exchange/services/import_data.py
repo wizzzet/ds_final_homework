@@ -11,11 +11,17 @@ from exchange.choices import StackExchangeSiteChoices
 
 
 BATCH_SIZE = 500
+multi_spaces_match = re.compile(' +')
 
 
 def parse_date(dt):
     if dt:
         return datetime.datetime.fromisoformat(dt).replace(tzinfo=UTC)
+
+
+def clean_text(value):
+    strip_tags(value).replace('\n', '').replace('\t', ' ')
+    return multi_spaces_match.sub(' ', value)
 
 
 def import_posts(source_site, path):
@@ -31,14 +37,25 @@ def import_posts(source_site, path):
     for _, row in etree.iterparse(posts_path, tag='row'):
         i += 1
         source_id = int(row.get('Id'))
+
+        title = row.get('Title').strip()
+        title_cleaned = clean_text(title)
+
         body = row.get('Body').strip()
-        body_cleaned = strip_tags(body).replace('\n', '').replace('\t', ' ')
-        body_cleaned = re.sub(' +', ' ', body_cleaned)
+        body_cleaned = clean_text(body)
+
+        if i % 100 == 0:
+            print(
+                f'{i}) {source_id}: {title_cleaned[:50]} {body_cleaned[:50]}'
+            )
+
         data = {
             'source_type': int(row.get('PostTypeId')),
             'source_parent_id': int(row.get('ParentId'))
             if row.get('ParentId') else None,
             'score': int(row.get('Score')),
+            'title': title,
+            'title_cleaned': title_cleaned,
             'body': body,
             'body_cleaned': body_cleaned,
             'owner_user_id': int(row.get('OwnerUserId'))
@@ -52,9 +69,6 @@ def import_posts(source_site, path):
                 (source_site, data['source_parent_id'])
             )
 
-        if i % 100 == 0:
-            print(f'{i}) {source_id}: {body_cleaned[:50]}')
-
         if (source_site, source_id) in posts_cache:
             post_id = posts_cache[(source_site, source_id)]
             models.StackExchangePost.objects.filter(id=post_id).update(**data)
@@ -67,3 +81,5 @@ def import_posts(source_site, path):
             posts_cache[(source_site, source_id)] = obj.id
 
         row.clear()
+
+    print('Done')

@@ -21,6 +21,8 @@ class StackExchangePost(LastModMixin, BasicModel):
         related_name='children', blank=True, null=True
     )
     score = models.IntegerField('Скоринг', blank=True, null=True)
+    title = models.TextField('Заголовок', blank=True)
+    title_cleaned = models.TextField('Заголовок очищенный', blank=True)
     body = models.TextField('Текст', blank=True)
     body_cleaned = models.TextField('Текст очищенный', blank=True, null=True)
     owner_user_id = models.BigIntegerField(
@@ -50,3 +52,7 @@ class StackExchangePost(LastModMixin, BasicModel):
         verbose_name = 'Запись StackExchange'
         verbose_name_plural = 'Записи StackExchange'
 
+    def __str__(self):
+        return (
+            self.title_cleaned or self.body_cleaned[:50] or str(self.source_id)
+        )

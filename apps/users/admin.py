@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.models import Group
 from import_export.admin import ExportMixin
 from import_export.formats import base_formats
-from users import import_export, models
+from users import sync, models
 from users.forms import UserAdminForm, UserCreationForm
 
 from snippets.admin import activate, deactivate
@@ -54,7 +54,7 @@ class UserAdmin(ExportMixin, DjangoUserAdmin):
     list_display_links = ('username',)
     list_filter = ('is_active', 'is_staff', 'is_superuser', 'groups')
     readonly_fields = ('last_login', 'date_joined', 'created', 'updated')
-    resource_class = import_export.UserResource
+    resource_class = sync.UserResource
     search_fields = (
         '=id', 'email', 'first_name', 'last_name', 'phone', 'username'
     )
