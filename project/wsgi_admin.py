@@ -5,7 +5,7 @@ import django
 from django.core.handlers.wsgi import WSGIHandler
 
 """
-WSGI config for AskUbuntu Q&A admin project.
+WSGI config for Stack Exchange Q&A admin project.
 
 This module contains the WSGI application used by Django's development server
 and any production WSGI deployments. It should expose a module-level variable

@@ -17,7 +17,7 @@ handler500 = 'views.e500'
 api_info = openapi.Info(
     title='DataScience Final Homework API',
     default_version='v1.0',
-    description='AskUbuntu Q&A',
+    description='Stack Exchange Q&A',
     contact=openapi.Contact(email='wizzzet@gmail.com'),
 )
 

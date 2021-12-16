@@ -20,9 +20,9 @@ MANAGERS = ADMINS
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'askubuntu',
-        'USER': 'askubuntu',
-        'PASSWORD': 'askubuntu',
+        'NAME': 'stack_exchange_faq',
+        'USER': 'stack_exchange_faq',
+        'PASSWORD': 'stack_exchange_faq',
         'HOST': 'localhost',
         'PORT': '5433'
     }
