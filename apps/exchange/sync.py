@@ -1,5 +1,5 @@
-from import_export import resources
 from exchange import models
+from import_export import resources
 
 
 class StackExchangePostResource(resources.ModelResource):

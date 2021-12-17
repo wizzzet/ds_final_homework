@@ -2,29 +2,20 @@ import csv
 import os
 
 from django.conf import settings
-from django.db.models import Prefetch
-
 from exchange import models
 
 
 def passages_generator(source_site=None):
-    children_qs = models.StackExchangePost.objects.filter(
-        source_type=2,
-        body_cleaned__isnull=False,
-        score__gt=0
-    ).exclude(body_cleaned='').only('id', 'body_cleaned')
     qs = models.StackExchangePost.objects.filter(
         source_type=1
     ).exclude(
         most_voted_answer__isnull=True
-    ).prefetch_related(
-        Prefetch('children', children_qs, to_attr='answers')
     )
 
     if source_site:
         qs = qs.filter(source_site=source_site)
 
-    for post in qs:
+    for post in qs.iterator():
         if not post.body_cleaned and not post.title_cleaned:
             continue
 
@@ -35,7 +26,13 @@ def passages_generator(source_site=None):
             for sentence in post.body_cleaned.split('\n'):
                 yield post.id, post.most_voted_answer_id, 2, sentence
 
-        for answer in post.answers:
+        answers = post.children.filter(
+            source_type=2,
+            body_cleaned__isnull=False,
+            score__gt=0
+        ).exclude(body_cleaned='').only('id', 'body_cleaned')
+
+        for answer in answers:
             for sentence in answer.body_cleaned.split('\n'):
                 yield post.id, answer.id, 1, sentence
 
@@ -57,13 +54,13 @@ def export_passages(file_path=None, source_site=None):
         ):
             i += 1
 
-            if i % 100 == 0:
+            if i % 1000 == 0:
                 print(
-                    f'{(str(i) + ")").ljust(10)}'
-                    f'{(str(post_id) + ")").ljust(10)}'
-                    f'{(str(answer_id) + ")").ljust(10)}'
+                    f'{(str(i) + ")").ljust(12)}'
+                    f'{str(post_id).ljust(12)}'
+                    f'{str(answer_id).ljust(12)}'
                     f'{sentence_type}: '
                     f'{passage}'
                 )
 
-            writer.writerow((answer_id, sentence_type, passage))
+            writer.writerow((post_id, answer_id, sentence_type, passage))

@@ -3,12 +3,10 @@ import os
 import re
 
 from django.utils.html import strip_tags
-from lxml import etree
-from pytz import UTC
-
 from exchange import models
 from exchange.choices import StackExchangeSiteChoices
-
+from lxml import etree
+from pytz import UTC
 
 BATCH_SIZE = 500
 multi_spaces_match = re.compile(r' +')
@@ -56,7 +54,7 @@ def import_posts(source_site, path):
         if i % 100 == 0:
             body_print = body_cleaned[:50].replace("\n", " ")
             print(
-                f'{(str(i) + ")").ljust(8)}'
+                f'{(str(i) + ")").ljust(12)}'
                 f'{str(source_id).ljust(12)} '
                 f'{source_type}: '
                 f'{(title_cleaned[:50] or "-").ljust(50)} '

@@ -1,8 +1,7 @@
 from django.contrib import admin
+from exchange import models, sync
 from import_export.admin import ExportMixin
 from import_export.formats import base_formats
-
-from exchange import models, sync
 
 
 @admin.register(models.StackExchangePost)

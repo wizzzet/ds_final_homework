@@ -4,7 +4,7 @@ from django.contrib.auth.admin import UserAdmin as DjangoUserAdmin
 from django.contrib.auth.models import Group
 from import_export.admin import ExportMixin
 from import_export.formats import base_formats
-from users import sync, models
+from users import models, sync
 from users.forms import UserAdminForm, UserCreationForm
 
 from snippets.admin import activate, deactivate
