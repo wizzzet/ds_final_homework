@@ -57,7 +57,7 @@ for app in settings.API_APPS:
     namespace = app.replace('.', '_')
     api_urlpatterns.append(
         path(
-            'api/<str:lang>/%s/' % app,
+            'api/%s/' % app,
             include('%s.api.urls' % app, namespace=namespace)
         )
     )

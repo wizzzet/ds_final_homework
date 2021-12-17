@@ -19,7 +19,8 @@ class StackExchangePostAdmin(ExportMixin, admin.ModelAdmin):
     raw_id_fields = ('most_voted_answer', 'parent')
     readonly_fields = tuple(fields)
     resource_class = sync.StackExchangePostResource
-    search_fields = ('=id',)  # на большее не хватит без танцев с индексами
+    # на большее не хватит без танцев с индексами
+    search_fields = ('=source_id',)
 
     def body_short(self, obj):
         return obj.body_cleaned[:50]

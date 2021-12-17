@@ -41,7 +41,7 @@ LANGUAGE_CODES_PUBLIC = ('ru',)  # 'en'
 DEFAULT_LANGUAGE = LANGUAGES[0][0]
 
 SITE_ID = 1
-SITE_NAME = 'ask.wizzzet.ru'
+SITE_NAME = 'stackexchange-api.wizzzet.ru'
 SITE_PROTOCOL = 'https://'
 
 USE_I18N = True
@@ -113,7 +113,7 @@ TEMPLATES = [{
 MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 MIDDLEWARE = [
-    'snippets.middlewares.language.LanguageMiddleware',
+    # 'snippets.middlewares.language.LanguageMiddleware',
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware'
 ]
@@ -132,11 +132,12 @@ INSTALLED_APPS = (
     'drf_yasg',
     'import_export',
     'exchange',
+    'prediction',
     'users'
 )
 
 API_APPS = (
-    # 'exchange',
+    'prediction',
 )
 
 LOGIN_REDIRECT_URL = '/'
@@ -206,7 +207,7 @@ CELERY_ENABLE_UTC = True
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.AllowAny',
-        'rest_framework.permissions.IsAuthenticated'
+        # 'rest_framework.permissions.IsAuthenticated'
     ),
     'DEFAULT_PAGINATION_CLASS':
         'rest_framework.pagination.LimitOffsetPagination',
@@ -215,8 +216,11 @@ REST_FRAMEWORK = {
     'DATE_INPUT_FORMATS': DATE_INPUT_FORMATS
 }
 
+API_CURRENT_VERSION = 'v1'
+
 SWAGGER_SETTINGS = {
-    'DEFAULT_AUTO_SCHEMA_CLASS': 'core.schema.ProjectSwaggerAutoSchema',
+    'DEFAULT_AUTO_SCHEMA_CLASS': 'snippets.api.swagger.schema'
+                                 '.ProjectSwaggerAutoSchema',
     'DEFAULT_INFO': 'project.urls.api_info',
     'SECURITY_DEFINITIONS': {
         'Bearer': {

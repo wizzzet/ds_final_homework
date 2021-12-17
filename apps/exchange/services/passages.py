@@ -53,7 +53,7 @@ def passages_generator(source_site=None):
 def export_passages(file_path=None, source_site=None):
     if file_path is None:
         file_path = os.path.join(
-            settings.PROJECT_DIR, 'export_data', 'passages.csv'
+            settings.SITE_ROOT, 'export_data', 'passages.csv'
         )
 
     with open(file_path, 'w') as csvfile:
