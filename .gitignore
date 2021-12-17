@@ -23,6 +23,7 @@ dump.gz
 /.idea/
 /logs/
 /import_data/
+/export_data/
 project/settings/local_settings.py
 static/node_modules/
 /public/

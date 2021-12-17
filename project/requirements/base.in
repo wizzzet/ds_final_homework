@@ -20,7 +20,10 @@ numpy
 pandas
 psycopg2-binary
 pytz
+rank_bm25
 redis
+scikit-learn
+sentence-transformers
 six
-tensorflow
+torch
 uWSGI
