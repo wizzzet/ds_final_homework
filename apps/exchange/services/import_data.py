@@ -11,7 +11,8 @@ from exchange.choices import StackExchangeSiteChoices
 
 
 BATCH_SIZE = 500
-multi_spaces_match = re.compile(' +')
+multi_spaces_match = re.compile(r' +')
+multi_lines_match = re.compile(r'\n{2,}')
 
 
 def parse_date(dt):
@@ -19,9 +20,16 @@ def parse_date(dt):
         return datetime.datetime.fromisoformat(dt).replace(tzinfo=UTC)
 
 
-def clean_text(value):
-    strip_tags(value).replace('\n', '').replace('\t', ' ')
-    return multi_spaces_match.sub(' ', value)
+def clean_text(value, join=False):
+    # убираем теги и табуляцию
+    value = strip_tags(value).replace('\t', ' ')
+    # склеиваем пробелы
+    value = multi_spaces_match.sub(' ', value)
+    # убираем избыточность пустых строк
+    value = multi_lines_match.sub('\n', value)
+    if join:
+        value = value.replace('\n', '')
+    return value.strip()
 
 
 def import_posts(source_site, path):
@@ -37,20 +45,26 @@ def import_posts(source_site, path):
     for _, row in etree.iterparse(posts_path, tag='row'):
         i += 1
         source_id = int(row.get('Id'))
+        source_type = int(row.get('PostTypeId'))
 
-        title = row.get('Title').strip()
-        title_cleaned = clean_text(title)
+        title = row.get('Title').strip() if row.get('Title') else ''
+        title_cleaned = clean_text(title, join=True) if title else ''
 
         body = row.get('Body').strip()
         body_cleaned = clean_text(body)
 
         if i % 100 == 0:
+            body_print = body_cleaned[:50].replace("\n", " ")
             print(
-                f'{i}) {source_id}: {title_cleaned[:50]} {body_cleaned[:50]}'
+                f'{(str(i) + ")").ljust(8)}'
+                f'{str(source_id).ljust(12)} '
+                f'{source_type}: '
+                f'{(title_cleaned[:50] or "-").ljust(50)} '
+                f'{body_print}'
             )
 
         data = {
-            'source_type': int(row.get('PostTypeId')),
+            'source_type': source_type,
             'source_parent_id': int(row.get('ParentId'))
             if row.get('ParentId') else None,
             'score': int(row.get('Score')),

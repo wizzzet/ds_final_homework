@@ -10,8 +10,9 @@ def update_most_voted_answers():
         i += 1
         if i % 100 == 0:
             print(
-                f'{i}) {obj.source_id}: {obj.title_cleaned[:50]} '
-                f'{obj.body_cleaned[:50]}'
+                f'{i}) {obj.source_id}: '
+                f'{(obj.title_cleaned[:50] or "-").ljust(50)} '
+                f'{obj.body_cleaned[:50] or "-"}'
             )
 
         answer = obj.children.filter(source_type=2).only('id').order_by(
